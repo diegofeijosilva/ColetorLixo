@@ -1,3 +1,4 @@
+package br.com.coletorlixo.model;
 import java.awt.Color;
 import java.util.Vector;
 

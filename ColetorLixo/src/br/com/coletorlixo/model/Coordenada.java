@@ -1,3 +1,4 @@
+package br.com.coletorlixo.model;
 import javax.swing.JButton;
 
 
