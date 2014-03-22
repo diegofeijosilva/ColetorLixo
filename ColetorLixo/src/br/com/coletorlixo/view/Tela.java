@@ -12,8 +12,9 @@ import javax.swing.JButton;
 
 /*
  *  Alunos:
- *    Daniel dos Santos Leite
- *    Thiago dos Santos Leite 
+ *    Johson Verdum
+ *    Diego Feijó
+ *    Marco Tielet
  *  
  * */
 
