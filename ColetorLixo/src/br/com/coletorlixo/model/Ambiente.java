@@ -3,17 +3,18 @@ import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 
 public class Ambiente {
 
-	int eixo_x = 20, eixo_y = 20; // tamanho eixo x e y da matriz
+	int eixo_x = 10, eixo_y = 10; // tamanho eixo x e y da matriz
 	int capacidade_seco=5, capacidade_organico = 5; // capacidade das lixeiras
 	//int capacidade_seco_usada=0, capacidade_organico_usada = 0; // quanto da capacidade já foi usada
 	
 	int executando = 0; // se o programa esta executando ou deve parar.
 	
-	JButton m[][] ; // matriz ambiente
+	JLabel m[][] ; // matriz ambiente
 	
 	int debug;
 	boolean debugando;
@@ -22,7 +23,7 @@ public class Ambiente {
 	Vector<Coordenada> pos_lixeiras_seco = new Vector<Coordenada>();
 	
 	
-	public Ambiente(JButton m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
+	public Ambiente(JLabel m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
 		this.m = m; // matriz ambiente
 		this.eixo_x = eixo_x; // tamanho matriz
 		this.eixo_y = eixo_y; // tamanho matriz
@@ -53,34 +54,48 @@ public class Ambiente {
 	
 	
 	public void setText(Coordenada pos, String texto){
-		
-		  
-		
+
 		  // define o texto da celula
-		  JButton bt = (JButton) m[pos.getX()][pos.getY()];
+		  JLabel bt = (JLabel) m[pos.getX()][pos.getY()];
 		  bt.setText(texto);
 		  bt.setToolTipText(null);
-		 
 		  
-		  
-		  
-		  // se for lixeira, adiciona na lista de lixeiras
+
+		  // Lixeira Organico
 		  if (texto.equals("Lo")) {
 			  pos.setCapacidade(capacidade_organico, bt);
 			  add_lixeira_organico(pos);
+			  
+			  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundoLO.png")));  // Seta a imagem de fundo
+			  
 		  }
+		  
+		  // Lixeira Seco
 		  if (texto.equals("Ls")) {
 			  pos.setCapacidade(capacidade_seco, bt);
 			  add_lixeira_seco(pos);
+			  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundoLS.png")));  // Seta a imagem de fundo
 			  
 			  
 		  }
 		  
+		  // Agente
 		  if (texto.equals("A")) {
 			  bt.setForeground(Color.RED);
+			  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundoA.png")));  // Seta a imagem de fundo
+			  
 		  } else{
 			  bt.setForeground(Color.BLACK);
 		  }
+		  
+		  // Lixo Seco
+		  if (texto.equals("S"))
+			  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundoLixoS.png")));  // Seta a imagem de fundo
+			
+		// Lixo Seco
+		  if (texto.equals("O"))
+			  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundoLixoO.png")));  // Seta a imagem de fundo
+			
 		  
 			
 		}
@@ -93,11 +108,11 @@ public class Ambiente {
 		return eixo_y;
 	}
 	
-	public JButton getBT(int x , int y) {
+	public JLabel getBT(int x , int y) {
 		if ((x < 0) | (x > eixo_x-1) | (y < 0) | (y > eixo_y-1)) {
 			return null;
 		}else {
-			  return (JButton) m[x][y];
+			  return (JLabel) m[x][y];
          }
 	}
 	
@@ -106,7 +121,7 @@ public class Ambiente {
 		if ((x<0)|(x>eixo_x-1)| (y<0)|(y>eixo_y-1)) {
 			return "";
 		}else {
-		  JButton bt_diag = (JButton) m[x][y];		
+		  JLabel bt_diag = (JLabel) m[x][y];		
 		  return bt_diag.getText();
 		}
 	}

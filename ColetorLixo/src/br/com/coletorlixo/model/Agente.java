@@ -2,6 +2,7 @@ package br.com.coletorlixo.model;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 
 public class Agente extends Thread {
@@ -58,8 +59,8 @@ public class Agente extends Thread {
 		int nr_randomico = 0, anda_y = 0, anda_x = 0;
 		int i = 1;
 		String  valor_celula_destino = "";
-		JButton bt=null ;
-		JButton btLixo = null;
+		JLabel bt=null ;
+		JLabel btLixo = null;
 		Coordenada lixeira;
 
 		Coordenada nova_pos = null;

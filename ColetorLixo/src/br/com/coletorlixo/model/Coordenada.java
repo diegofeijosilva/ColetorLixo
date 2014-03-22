@@ -1,5 +1,6 @@
 package br.com.coletorlixo.model;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 
 public class Coordenada {
@@ -12,7 +13,7 @@ public class Coordenada {
 	}
 
 
-	public void setCapacidade(int capacidade, JButton bt) {
+	public void setCapacidade(int capacidade, JLabel bt) {
 		String hint ;
 		
 		this.capacidade = capacidade;
@@ -33,7 +34,7 @@ public class Coordenada {
 		
 	}
 	
-	public void DecrementaCapacidade(int valor, JButton bt) {
+	public void DecrementaCapacidade(int valor, JLabel bt) {
 		String hint ;
 		
 		this.capacidade = this.capacidade - valor;
