@@ -1,39 +1,43 @@
 package br.com.coletorlixo.view;
 import javax.swing.*;
 
-import br.com.coletorlixo.model.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.awt.*;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import br.com.coletorlixo.model.*;
 
 /*
  *  Alunos:
- *    Johson Verdum
- *    Diego Feijó
- *    Marco Tielet
+ *    Daniel dos Santos Leite
+ *    Thiago dos Santos Leite 
  *  
  * */
 
 public class Tela extends JFrame{
 
-	private static final long serialVersionUID= 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	private Ambiente ambiente;	
-	private static Integer eixoMatriz = 10; // Tamanho da matriz
+	
+	
+	Ambiente ambiente;		
 		
-	private Vector<Agente> listaAgentes = new Vector<Agente>();
+	Vector<Agente> listaAgentes = new Vector<Agente>();
 	
 	
-	private JPanel pAmbiente = new JPanel();	
-	private JPanel pConfig = new JPanel();
-	private JPanel pBotoes= new JPanel();
-	private JPanel pBaixo = new JPanel();		
+	JPanel pAmbiente = new JPanel();	
+	JPanel pConfig = new JPanel();
+	JPanel pBotoes= new JPanel();
+	JPanel pBaixo = new JPanel();
+				
 	
-	JButton btParar = new JButton("Stop");
+	JButton btParar = new JButton("Parar");
 	class BTPararListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			ambiente.setExecutando(0); // sinaliza para as threads parar
@@ -44,7 +48,7 @@ public class Tela extends JFrame{
 		}			
 	}
 	
-	JButton btAtualiza = new JButton("Atualiza Ambiente");
+	JButton btAtualiza = new JButton("Atualizar Ambiente");
 	class AtualizaListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			atualizaAmbiente();
@@ -52,7 +56,7 @@ public class Tela extends JFrame{
 		}			
 	}
 	
-	JButton btIniciarColeta = new JButton("Start");
+	JButton btIniciarColeta = new JButton("Iniciar Coleta");
 	class IniciarColetaListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			iniciarColeta();				
@@ -77,7 +81,15 @@ public class Tela extends JFrame{
 			
 		}			
 	}		
-
+	
+	
+	
+	
+	
+	
+	
+	JTextField txtx = new JTextField("10");
+	JTextField txty = new JTextField("10");	
 	JTextField txtlixeiras_seco = new JTextField("2");
 	JTextField txtlixeiras_organico = new JTextField("2");
 	JTextField txtLix_capac_seco = new JTextField("5");
@@ -87,13 +99,20 @@ public class Tela extends JFrame{
 	JTextField txtSacoSeco = new JTextField("2");
 	JTextField txtLixoOrganico = new JTextField("2");
 	JTextField txtLixoSeco = new JTextField("2");
+	
+	
 
+	
+	
+	
+	
+	
 
 	Tela() {
 				
 		super("Coletor de lixo");		
 		
-		// Adiciona funções aos botões
+		
 		btAtualiza.addActionListener(new AtualizaListener());
 		btIniciarColeta.addActionListener(new IniciarColetaListener());	
 		btDebug.addActionListener(new DebugListener());
@@ -104,17 +123,28 @@ public class Tela extends JFrame{
 		btParar.setEnabled(false);
 		
 		this.getContentPane().setLayout(new BorderLayout());
-
+		
 		
 		pConfig.setLayout(new GridLayout(6,4));
+		pConfig.add(new JLabel("Tamanho do eixo X"));
+		pConfig.add(txtx);
+		//pConfig.add(new JLabel());
+		pConfig.add(new JLabel("Tamanho do eixo Y"));
+		pConfig.add(txty);
+		//pConfig.add(new JLabel());
 		
-
+		
+		
 		pConfig.add(new JLabel("Qtde lixeiras(seco)"));
 		pConfig.add(txtlixeiras_seco);
+		//pConfig.add(new JLabel());
 		pConfig.add(new JLabel("Qtde lixeiras(orgânico)"));		
 		pConfig.add(txtlixeiras_organico);
+		//pConfig.add(new JLabel());
 		pConfig.add(new JLabel("Capac. lixeira seco"));
 		pConfig.add(txtLix_capac_seco);
+		//pConfig.add(new JLabel());
+		//pConfig.add(new JLabel());
 		pConfig.add(new JLabel("Capac. lixeira orgânico"));
 		pConfig.add(txtLix_capac_organico);		
 		
@@ -122,6 +152,16 @@ public class Tela extends JFrame{
 		pConfig.add(txtLixoSeco);
 		pConfig.add(new JLabel("Qtde lixo orgânico"));
 		pConfig.add(txtLixoOrganico);
+		
+		
+		//pConfig.add(new JLabel());
+		//pConfig.add(new JLabel());
+		
+		
+		//pConfig.add(new JLabel());
+		//pConfig.add(new JLabel());
+		
+		
 		
 		pConfig.add(new JLabel("Capac. saco seco"));
 		pConfig.add(txtSacoSeco);
@@ -133,11 +173,19 @@ public class Tela extends JFrame{
 		
 		pConfig.add(CBdebug);
 
-
+		
+		
 		pBotoes.add(btAtualiza);
 		pBotoes.add(btIniciarColeta);		
 		pBotoes.add(btDebug);
 		pBotoes.add(btParar);
+		
+		
+		
+		
+		
+		
+		
 
 		// inicializa o ambiente
 		atualizaAmbiente();
@@ -151,7 +199,13 @@ public class Tela extends JFrame{
 	}
 	
 	public void atualizaAmbiente(){
-	
+		// Atualiza variaveis do ambiente , monta a matriz e coloca na panel ambiente
+		
+				
+				
+		
+		int eixo_x = Integer.parseInt(txtx.getText());
+		int eixo_y = Integer.parseInt(txty.getText());
 		int saco_seco = Integer.parseInt(txtSacoSeco.getText());
 		int saco_organico = Integer.parseInt(txtsacoOrganico.getText());
 		int lixeiras_seco = Integer.parseInt(txtlixeiras_seco.getText());
@@ -165,23 +219,23 @@ public class Tela extends JFrame{
 		int qtde_agentes = Integer.parseInt(txtqtdeAgentes.getText());
 		
 		
-		// Cria a matriz com o objeto MyImage	
-		MyAmbiente matriz[][] = new MyAmbiente[eixoMatriz][eixoMatriz];
+		// cria nova matriz		
+		JButton matriz[][] = new JButton[eixo_x][eixo_y];
 				 
 		pAmbiente.removeAll(); // limpa da tela a matriz anterior				
-		pAmbiente.setLayout(new GridLayout(eixoMatriz,eixoMatriz)); // configura a tela
+		pAmbiente.setLayout(new GridLayout(eixo_y,eixo_x)); // configura a tela
 		
 		Coordenada pos;
 		
 		// monta a matriz e joga na tela
-		for (int yy = 0; yy < eixoMatriz; yy++) {
-			for (int xx = 0; xx < eixoMatriz; xx++) {			  
-			  matriz[xx][yy] = new MyAmbiente(); //popula a matriz para mostrar na tela
+		for (int yy = 0; yy < eixo_y; yy++) {
+			for (int xx = 0; xx < eixo_x; xx++) {			  
+			  matriz[xx][yy] = new JButton(); //popula a matriz para mostrar na tela
 			  pAmbiente.add(matriz[xx][yy]); // adiciona na tela
 			}
 		}
 		
-		ambiente = new Ambiente(matriz, eixoMatriz, eixoMatriz, Lix_Capacidade_seco, Lix_Capacidade_organico );
+		ambiente = new Ambiente(matriz, eixo_x, eixo_y,Lix_Capacidade_seco, Lix_Capacidade_organico );
 		
 		
 		
@@ -285,7 +339,13 @@ public class Tela extends JFrame{
 		
 	}
 	
-	// Inicia a aplicação
+	
+   
+	
+	
+
+	
+	
 	public static void main(String[] args) {
 
        new Tela();
