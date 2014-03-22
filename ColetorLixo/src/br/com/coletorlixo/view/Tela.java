@@ -111,8 +111,7 @@ public class Tela extends JFrame{
 		
 		pConfig.setLayout(new GridLayout(6,4));
 		
-		
-		
+
 		pConfig.add(new JLabel("Qtde lixeiras(seco)"));
 		pConfig.add(txtlixeiras_seco);
 		//pConfig.add(new JLabel());
@@ -131,16 +130,6 @@ public class Tela extends JFrame{
 		pConfig.add(new JLabel("Qtde lixo orgânico"));
 		pConfig.add(txtLixoOrganico);
 		
-		
-		//pConfig.add(new JLabel());
-		//pConfig.add(new JLabel());
-		
-		
-		//pConfig.add(new JLabel());
-		//pConfig.add(new JLabel());
-		
-		
-		
 		pConfig.add(new JLabel("Capac. saco seco"));
 		pConfig.add(txtSacoSeco);
 		pConfig.add(new JLabel("Capac. saco orgânico"));
@@ -151,8 +140,7 @@ public class Tela extends JFrame{
 		
 		pConfig.add(CBdebug);
 
-		
-		
+
 		pBotoes.add(btAtualiza);
 		pBotoes.add(btIniciarColeta);		
 		pBotoes.add(btDebug);
