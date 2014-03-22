@@ -7,13 +7,13 @@ import javax.swing.JButton;
 
 public class Ambiente {
 
-	int eixo_x = 20, eixo_y = 20; // tamanho eixo x e y da matriz
-	int capacidade_seco=5, capacidade_organico = 5; // capacidade das lixeiras
+	private int eixo_x = 20, eixo_y = 20; // tamanho eixo x e y da matriz
+	private int capacidade_seco=5, capacidade_organico = 5; // capacidade das lixeiras
 	//int capacidade_seco_usada=0, capacidade_organico_usada = 0; // quanto da capacidade já foi usada
 	
-	int executando = 0; // se o programa esta executando ou deve parar.
+	private int executando = 0; // se o programa esta executando ou deve parar.
 	
-	JButton m[][] ; // matriz ambiente
+	private MyAmbiente m[][] ; // matriz ambiente
 	
 	int debug;
 	boolean debugando;
@@ -22,7 +22,7 @@ public class Ambiente {
 	Vector<Coordenada> pos_lixeiras_seco = new Vector<Coordenada>();
 	
 	
-	public Ambiente(JButton m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
+	public Ambiente(MyAmbiente m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
 		this.m = m; // matriz ambiente
 		this.eixo_x = eixo_x; // tamanho matriz
 		this.eixo_y = eixo_y; // tamanho matriz
@@ -57,13 +57,10 @@ public class Ambiente {
 		  
 		
 		  // define o texto da celula
-		  JButton bt = (JButton) m[pos.getX()][pos.getY()];
-		  bt.setText(texto);
-		  bt.setToolTipText(null);
-		 
-		  
-		  
-		  
+		  MyAmbiente bt = (MyAmbiente) m[pos.getX()][pos.getY()];
+		  bt.setFlag(texto);
+		 // bt.setToolTipText(null);
+
 		  // se for lixeira, adiciona na lista de lixeiras
 		  if (texto.equals("Lo")) {
 			  pos.setCapacidade(capacidade_organico, bt);
@@ -77,9 +74,9 @@ public class Ambiente {
 		  }
 		  
 		  if (texto.equals("A")) {
-			  bt.setForeground(Color.RED);
+			  //bt.setForeground(Color.RED);
 		  } else{
-			  bt.setForeground(Color.BLACK);
+			  //bt.setForeground(Color.BLACK);
 		  }
 		  
 			
@@ -93,11 +90,11 @@ public class Ambiente {
 		return eixo_y;
 	}
 	
-	public JButton getBT(int x , int y) {
+	public MyAmbiente getBT(int x , int y) {
 		if ((x < 0) | (x > eixo_x-1) | (y < 0) | (y > eixo_y-1)) {
 			return null;
 		}else {
-			  return (JButton) m[x][y];
+			  return (MyAmbiente) m[x][y];
          }
 	}
 	
@@ -106,8 +103,8 @@ public class Ambiente {
 		if ((x<0)|(x>eixo_x-1)| (y<0)|(y>eixo_y-1)) {
 			return "";
 		}else {
-		  JButton bt_diag = (JButton) m[x][y];		
-		  return bt_diag.getText();
+		  MyAmbiente bt_diag = (MyAmbiente) m[x][y];		
+		  return bt_diag.getFlag();
 		}
 	}
 	

@@ -58,8 +58,8 @@ public class Agente extends Thread {
 		int nr_randomico = 0, anda_y = 0, anda_x = 0;
 		int i = 1;
 		String  valor_celula_destino = "";
-		JButton bt=null ;
-		JButton btLixo = null;
+		MyAmbiente bt=null ;
+		MyAmbiente btLixo = null;
 		Coordenada lixeira;
 
 		Coordenada nova_pos = null;
@@ -186,13 +186,7 @@ public class Agente extends Thread {
 			hint += "<B>Procurando lixeira: </B>Não<BR>"	;
 		}
 		
-		
-		
-		
-		
-		
-		
-		
+
 		// após andar verifica se está ao lado de lixeira e então esvazia se o saco estiver cheio
 		if ((usado_seco >= capacidade_seco ) & (procurando_lixeira)) {			
 			if (( ambiente.getText(pos_atual.getX() + 1,pos_atual.getY()) == "Ls") |

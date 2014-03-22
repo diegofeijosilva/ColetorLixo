@@ -1,5 +1,4 @@
 package br.com.coletorlixo.model;
-import javax.swing.JButton;
 
 
 public class Coordenada {
@@ -12,14 +11,14 @@ public class Coordenada {
 	}
 
 
-	public void setCapacidade(int capacidade, JButton bt) {
+	public void setCapacidade(int capacidade, MyAmbiente bt) {
 		String hint ;
 		
 		this.capacidade = capacidade;
 		
 		hint = "<HTML><FONT FACE=\"Tahoma\" SIZE=\"-2\">";  
 		
-		if  (bt.getText().equals("Lo")){
+		if  (bt.getFlag().equals("Lo")){
 			hint += "<b>Lixeia de lixo orgânico</b><br>";
 		}else{
 			hint += "<b>Lixeia de lixo seco</b><br>";
@@ -28,19 +27,19 @@ public class Coordenada {
 		hint += "<b>Capacidade disponível: </b>" + capacidade;
 		// Fecha o HTML do hint
 		hint += "</FONT></HTML>";		
-		bt.setToolTipText(hint);
+		//bt.setToolTipText(hint);
 		
 		
 	}
 	
-	public void DecrementaCapacidade(int valor, JButton bt) {
+	public void DecrementaCapacidade(int valor, MyAmbiente bt) {
 		String hint ;
 		
 		this.capacidade = this.capacidade - valor;
 		
         hint = "<HTML><FONT FACE=\"Tahoma\" SIZE=\"-2\">";  
 		
-        if  (bt.getText().equals("Lo")){
+        if  (bt.getFlag().equals("Lo")){
 			hint += "<b>Lixeia de lixo orgânico</b><br>";
 		}else{
 			hint += "<b>Lixeia de lixo seco</b><br>";
