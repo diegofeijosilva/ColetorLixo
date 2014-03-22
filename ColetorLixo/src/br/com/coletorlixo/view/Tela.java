@@ -20,14 +20,12 @@ import javax.swing.JButton;
 
 public class Tela extends JFrame{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID= 1L;
 	
 	
 	
-	Ambiente ambiente;		
+	Ambiente ambiente;	
+	private static Integer eixoMatriz = 10; // Tamanho da matriz
 		
 	Vector<Agente> listaAgentes = new Vector<Agente>();
 	
@@ -82,15 +80,7 @@ public class Tela extends JFrame{
 			
 		}			
 	}		
-	
-	
-	
-	
-	
-	
-	
-	JTextField txtx = new JTextField("10");
-	JTextField txty = new JTextField("10");	
+
 	JTextField txtlixeiras_seco = new JTextField("2");
 	JTextField txtlixeiras_organico = new JTextField("2");
 	JTextField txtLix_capac_seco = new JTextField("5");
@@ -100,14 +90,7 @@ public class Tela extends JFrame{
 	JTextField txtSacoSeco = new JTextField("2");
 	JTextField txtLixoOrganico = new JTextField("2");
 	JTextField txtLixoSeco = new JTextField("2");
-	
-	
 
-	
-	
-	
-	
-	
 
 	Tela() {
 				
@@ -127,12 +110,6 @@ public class Tela extends JFrame{
 		
 		
 		pConfig.setLayout(new GridLayout(6,4));
-		pConfig.add(new JLabel("Tamanho do eixo X"));
-		pConfig.add(txtx);
-		//pConfig.add(new JLabel());
-		pConfig.add(new JLabel("Tamanho do eixo Y"));
-		pConfig.add(txty);
-		//pConfig.add(new JLabel());
 		
 		
 		
@@ -180,13 +157,6 @@ public class Tela extends JFrame{
 		pBotoes.add(btIniciarColeta);		
 		pBotoes.add(btDebug);
 		pBotoes.add(btParar);
-		
-		
-		
-		
-		
-		
-		
 
 		// inicializa o ambiente
 		atualizaAmbiente();
@@ -201,12 +171,9 @@ public class Tela extends JFrame{
 	
 	public void atualizaAmbiente(){
 		// Atualiza variaveis do ambiente , monta a matriz e coloca na panel ambiente
-		
-				
-				
-		
-		int eixo_x = Integer.parseInt(txtx.getText());
-		int eixo_y = Integer.parseInt(txty.getText());
+
+		int eixo_x = eixoMatriz;
+		int eixo_y = eixoMatriz;
 		int saco_seco = Integer.parseInt(txtSacoSeco.getText());
 		int saco_organico = Integer.parseInt(txtsacoOrganico.getText());
 		int lixeiras_seco = Integer.parseInt(txtlixeiras_seco.getText());
