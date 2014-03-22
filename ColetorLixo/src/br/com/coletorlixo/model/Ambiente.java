@@ -2,9 +2,6 @@ package br.com.coletorlixo.model;
 import java.awt.Color;
 import java.util.Vector;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
 
 public class Ambiente {
 
@@ -14,7 +11,7 @@ public class Ambiente {
 	
 	int executando = 0; // se o programa esta executando ou deve parar.
 	
-	JLabel m[][] ; // matriz ambiente
+	MyLabel m[][] ; // matriz ambiente
 	
 	int debug;
 	boolean debugando;
@@ -23,7 +20,7 @@ public class Ambiente {
 	Vector<Coordenada> pos_lixeiras_seco = new Vector<Coordenada>();
 	
 	
-	public Ambiente(JLabel m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
+	public Ambiente(MyLabel m[][], int eixo_x, int eixo_y, int capacidade_seco, int capacidade_organico  ) {
 		this.m = m; // matriz ambiente
 		this.eixo_x = eixo_x; // tamanho matriz
 		this.eixo_y = eixo_y; // tamanho matriz
@@ -56,10 +53,12 @@ public class Ambiente {
 	public void setText(Coordenada pos, String texto){
 
 		  // define o texto da celula
-		  JLabel bt = (JLabel) m[pos.getX()][pos.getY()];
-		  bt.setText(texto);
+		  MyLabel bt = (MyLabel) m[pos.getX()][pos.getY()];
+		  bt.setFlag(texto);
 		  bt.setToolTipText(null);
 		  
+		  // Fundo padrão
+		  bt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundo.png")));  // Seta a imagem de fundo
 
 		  // Lixeira Organico
 		  if (texto.equals("Lo")) {
@@ -108,11 +107,11 @@ public class Ambiente {
 		return eixo_y;
 	}
 	
-	public JLabel getBT(int x , int y) {
+	public MyLabel getBT(int x , int y) {
 		if ((x < 0) | (x > eixo_x-1) | (y < 0) | (y > eixo_y-1)) {
 			return null;
 		}else {
-			  return (JLabel) m[x][y];
+			  return (MyLabel) m[x][y];
          }
 	}
 	
@@ -121,8 +120,8 @@ public class Ambiente {
 		if ((x<0)|(x>eixo_x-1)| (y<0)|(y>eixo_y-1)) {
 			return "";
 		}else {
-		  JLabel bt_diag = (JLabel) m[x][y];		
-		  return bt_diag.getText();
+		  MyLabel bt_diag = (MyLabel) m[x][y];		
+		  return bt_diag.getFlag();
 		}
 	}
 	

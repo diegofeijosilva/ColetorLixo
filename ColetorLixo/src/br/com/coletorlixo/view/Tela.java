@@ -173,7 +173,7 @@ public class Tela extends JFrame{
 		
 		
 		// cria nova matriz		
-		JLabel matriz[][] = new JLabel[tamMatriz][tamMatriz];
+		MyLabel matriz[][] = new MyLabel[tamMatriz][tamMatriz];
 				 
 		pAmbiente.removeAll(); // limpa da tela a matriz anterior				
 		pAmbiente.setLayout(new GridLayout(tamMatriz, tamMatriz)); // configura a tela
@@ -183,7 +183,7 @@ public class Tela extends JFrame{
 		// monta a matriz e joga na tela
 		for (int yy = 0; yy < tamMatriz; yy++) {
 			for (int xx = 0; xx < tamMatriz; xx++) {			  
-			  matriz[xx][yy] = new JLabel(); //popula a matriz para mostrar na tela
+			  matriz[xx][yy] = new MyLabel(); //popula a matriz para mostrar na tela
 			  
 			  // Seta a imagem de fundo
 			  matriz[xx][yy].setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundo.png")));
