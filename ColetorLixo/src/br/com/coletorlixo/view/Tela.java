@@ -148,9 +148,9 @@ public class Tela extends JFrame{
 		// inicializa o ambiente
 		atualizaAmbiente();
 		
-		this.add(pAmbiente,BorderLayout.NORTH);
-		this.add(pConfig,BorderLayout.CENTER);
-		this.add(pBotoes,BorderLayout.SOUTH);
+		this.add(pAmbiente,BorderLayout.SOUTH);
+		this.add(pConfig,BorderLayout.NORTH);
+		this.add(pBotoes,BorderLayout.CENTER);
 		this.pack();
 		this.setVisible(true);
 		
@@ -184,6 +184,8 @@ public class Tela extends JFrame{
 		for (int yy = 0; yy < tamMatriz; yy++) {
 			for (int xx = 0; xx < tamMatriz; xx++) {			  
 			  matriz[xx][yy] = new MyLabel(); //popula a matriz para mostrar na tela
+			  
+			  matriz[xx][yy].setBounds(20,20,90,90);  
 			  
 			  // Seta a imagem de fundo
 			  matriz[xx][yy].setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/coletorlixo/view/resources/fundo.png")));
