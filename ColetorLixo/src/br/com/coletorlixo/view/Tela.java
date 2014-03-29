@@ -48,7 +48,6 @@ public class Tela extends JFrame{
 	class AtualizaListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			atualizaAmbiente();
-			
 		}			
 	}
 	
@@ -92,8 +91,7 @@ public class Tela extends JFrame{
 
 	Tela() {
 				
-		super("Coletor de lixo");		
-		
+		super("Coletor de lixo");
 		
 		btAtualiza.addActionListener(new AtualizaListener());
 		btIniciarColeta.addActionListener(new IniciarColetaListener());	
@@ -303,6 +301,5 @@ public class Tela extends JFrame{
        new Tela();
        
 	}
-	
 
 }
