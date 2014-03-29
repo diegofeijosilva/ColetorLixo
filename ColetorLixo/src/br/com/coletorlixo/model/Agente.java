@@ -1,6 +1,11 @@
 package br.com.coletorlixo.model;
 import java.util.Vector;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+
 
 
 public class Agente extends Thread {
@@ -10,6 +15,14 @@ public class Agente extends Thread {
 	final int ATRAS = 2;
 	final int ABAIXO = 3;
 	final int ACIMA = 4;
+	
+	public static int numeroAgente = 0;
+	public static JFrame frame = new JFrame("Log de Agentes");
+	public static JTextArea textarea = new JTextArea();
+	public static JScrollPane scroll = new JScrollPane(textarea);   
+	
+	
+	String nomeAgente;
 	
 	boolean procurando_lixeira = false;
 	
@@ -35,6 +48,16 @@ public class Agente extends Thread {
 
 	public Agente(Coordenada pos, Ambiente ambiente, int capacidade_organico,
 			int capacidade_seco) {
+		
+		if(numeroAgente == 0) {
+			frame.setSize(400,610);
+			frame.setLocation(600, 0);
+			textarea.setBounds(0, 0, 380, 590);
+			scroll.setBounds(0, 0, 390, 600);
+			frame.getContentPane().add(scroll);
+			frame.setVisible(true);
+		}
+		numeroAgente++;
 		// seta a posição inicial
 		this.pos_atual = pos;
 
@@ -46,6 +69,7 @@ public class Agente extends Thread {
 
 		this.capacidade_organico = capacidade_organico;
 		this.capacidade_seco = capacidade_seco;
+		this.nomeAgente = "\n[AGENTE " + numeroAgente + "]";
 	}
 
 	public int Anda(int direcao) {
@@ -77,7 +101,7 @@ public class Agente extends Thread {
 				}
 			} else {
 				nr_randomico = direcao;
-				System.out.print("FIXO ... ");				
+				gravaLog(this.nomeAgente + " FIXO ... ");				
 			}
 
 
@@ -85,19 +109,19 @@ public class Agente extends Thread {
 			switch (nr_randomico) {
 			case FRENTE:
 				anda_x = 1;
-				System.out.println("andando pra frente");
+				gravaLog(this.nomeAgente + " andando pra frente");
 				break;
 			case ATRAS:
 				anda_x = -1;
-				System.out.println("andando pra trás");
+				gravaLog(this.nomeAgente + " andando pra trás");
 				break;
 			case ABAIXO:
 				anda_y = 1;
-				System.out.println("andando pra baixo");
+				gravaLog(this.nomeAgente + " andando pra baixo");
 				break;
 			case ACIMA:
 				anda_y = -1;
-				System.out.println("andando pra cima");
+				gravaLog(this.nomeAgente + " andando pra cima");
 				break;
 			}
 
@@ -129,14 +153,14 @@ public class Agente extends Thread {
 			// senão sortea de novo.
 			if (bt.getText().equals("S")) {
 				if (capacidade_seco > usado_seco) {
-					System.out.println(" --> Coletei lixo seco");
+					gravaLog(this.nomeAgente + " --> Coletei lixo seco");
 					usado_seco++;
 					
 					if (capacidade_seco == usado_seco) {
 						i = 4; // sinaliza que acabou de encher o saco e deve iniciar procura por lixeira
 					}
 				} else {
-					System.out.println(" --> Não coletei (saco cheio)");
+					gravaLog(this.nomeAgente + " --> Não coletei (saco cheio)");
 					valor_celula_destino = bt.getText();// guarda para devolver depois o valor anterior da celula
 				}
 
@@ -146,14 +170,14 @@ public class Agente extends Thread {
 				
 			} else if (bt.getText().equals("O")) {
 				if (capacidade_organico > usado_organico) {
-					System.out.println(" --> Coletei lixo orgânico");
+					gravaLog("this.nomeAgente +  --> Coletei lixo orgânico");
 					usado_organico++;
 					
 					if (capacidade_organico == usado_organico) {
 						i = 4;  // sinaliza que acabou de encher o saco e deve iniciar procura por lixeira
 					}
 				} else {
-					System.out.println(" --> Não coletei (saco cheio)");
+					gravaLog(this.nomeAgente + " --> Não coletei (saco cheio)");
 					valor_celula_destino = bt.getText();// guarda para devolver depois o valor anterior da celula
 				}
 				nova_pos = new Coordenada(pos_atual.getX() + anda_x, pos_atual.getY() + anda_y);
@@ -204,13 +228,13 @@ public class Agente extends Thread {
 				btLixo = ambiente.getBT(lixeira.getX(), lixeira.getY());
 				
 				if (lixeira.getCapacidade() > usado_seco) {
-					System.out.println("----> Achei Lixeira, esvaziando saco lixo seco...");
+					gravaLog(this.nomeAgente + " ----> Achei Lixeira, esvaziando saco lixo seco...");
 					hint += "<B>Achei Lixeira, esvaziando saco lixo seco...</B><BR>"	;
 					lixeira.DecrementaCapacidade(usado_seco, btLixo);
 					usado_seco = 0;					
 					i = 5; // sinaliza que não deve mais procurar lixeira.
 				}else {
-					System.out.println("----> Achei Lixeira, esvaziando saco lixo seco...");
+					gravaLog(this.nomeAgente + " ----> Achei Lixeira, esvaziando saco lixo seco...");
 					hint += "<B>Achei Lixeira, esvaziando saco lixo seco...</B><BR>"	;
 					usado_seco = usado_seco - lixeira.getCapacidade() ;
 					lixeira.setCapacidade(0, btLixo);
@@ -231,13 +255,13 @@ public class Agente extends Thread {
 				btLixo = ambiente.getBT(lixeira.getX(), lixeira.getY());
 				
 				if (lixeira.getCapacidade() > usado_organico) {
-					System.out.println("----> Achei Lixeira, esvaziando saco lixo orgânico...");
+					gravaLog(this.nomeAgente + " ----> Achei Lixeira, esvaziando saco lixo orgânico...");
 					hint += "<B>Achei Lixeira, esvaziando saco lixo orgânico...</B><BR>"	;
 					lixeira.DecrementaCapacidade(usado_organico,btLixo);
 					usado_organico = 0;					
 					i = 5; // sinaliza que não deve mais procurar lixeira.
 				}else {
-					System.out.println("----> Achei Lixeira, esvaziando saco lixo orgânico...");
+					gravaLog(this.nomeAgente +  " ----> Achei Lixeira, esvaziando saco lixo orgânico...");
 					hint += "<B>Achei Lixeira, esvaziando saco lixo orgânico...</B><BR>"	;
 					usado_organico = usado_organico - lixeira.getCapacidade() ;
 					lixeira.setCapacidade(0,btLixo);
@@ -306,8 +330,8 @@ public class Agente extends Thread {
 			// se esta em modo debug e pode executar
 			if ((ambiente.debugando)) {
 				if (ambiente.possoExecutar() > 0) {
-					// System.out.println("Debugando");
-					// System.out.println(ambiente.possoExecutar());
+					// gravaLog("Debugando");
+					// gravaLog(ambiente.possoExecutar());
 					ambiente.decrementaDebug();
 				} else {
 					try {
@@ -329,13 +353,13 @@ public class Agente extends Thread {
 
 				if (capacidade_seco <= usado_seco) {
 					lixeira = getLixeiraMaisPerto("Ls");
-					System.out.println("Saco de lixo seco lotado, procurando lixeira...");
+					gravaLog(this.nomeAgente + " Saco de lixo seco lotado, procurando lixeira...");
 				}else if (capacidade_organico <= usado_organico) {
-					System.out.println("Saco de lixo orgânico lotado, procurando lixeira...");
+					gravaLog(this.nomeAgente + " Saco de lixo orgânico lotado, procurando lixeira...");
 					lixeira = getLixeiraMaisPerto("Lo");
 				}
 				if (lixeira ==null) {
-					System.out.println("Agente parando... não tenho mais lixeiras na lista");					
+					gravaLog(this.nomeAgente +  " Agente parando... não tenho mais lixeiras na lista");					
 					extracted(); // para a thread						  
 				}else{						
 					// força o agente a andar na direção da lixeira:
@@ -380,15 +404,14 @@ public class Agente extends Thread {
 						
 					}
 					
-					System.out.print("Andando FIXO na direção = ");
-					System.out.println(direcao);
+					gravaLog(this.nomeAgente + " Andando FIXO na direção = " + direcao);
 				}
 				achou_lixo = Anda(direcao); // anda o agente em direção fixa
 
 				// se achou_lixo = 3 então deve re-sortear a direção pois chegou
 				// ao final da matriz
 				if (achou_lixo == 3) {
-					System.out.println("cheguei no final da matriz ou bati em lixeira");
+					gravaLog(this.nomeAgente + " cheguei no final da matriz ou bati em lixeira");
 					achou_lixo = 0;
 					direcao = 0;
 					ciclos_sem_achar_lixo = 0; // ao chegar no final da matriz
@@ -396,12 +419,12 @@ public class Agente extends Thread {
 					andar_aleatorio_3ciclos = 3; // se estiver procurando lixo, força andar aleatorio por 3 ciclos para não se prender.
 					continue;
 				}else if (achou_lixo == 4) {
-					System.out.println("Saco cheio no próximo ciclo iniciará procura por lixeira...");
+					gravaLog(this.nomeAgente + " Saco cheio no próximo ciclo iniciará procura por lixeira...");
 					andar_aleatorio_3ciclos = 0; 
 					procurando_lixeira = true;
 					continue;
 				}else if (achou_lixo == 5) {
-					System.out.println("Esvaziei saco de lixo");
+					gravaLog(this.nomeAgente + " Esvaziei saco de lixo");
 					ciclos_sem_achar_lixo = 0;
 					andar_aleatorio_3ciclos = 0; 
 					continue;
@@ -411,7 +434,7 @@ public class Agente extends Thread {
 				achou_lixo = Anda(0); // anda o agente em modo aleatorio
 				direcao = 0;
 				andar_aleatorio_3ciclos--; // decrementa a variavel contar vezes q andou aleatorio , enquanto procura lixeira.
-				System.out.println("Andei aleatorio");
+				gravaLog(this.nomeAgente + " Andei aleatorio");
 			}
 			// controla se achou lixo ou não
 			if (achou_lixo == 1) {
@@ -420,10 +443,9 @@ public class Agente extends Thread {
 				ciclos_sem_achar_lixo++;
 			}
 
-			System.out.print("Cliclos=");
-			System.out.print(ciclos_sem_achar_lixo);
-			System.out.print("......Achou lixo=");
-			System.out.println(achou_lixo);
+			gravaLog(this.nomeAgente + " Cliclos = " + ciclos_sem_achar_lixo);
+			gravaLog(this.nomeAgente + " ......Achou lixo = " + achou_lixo);
+
 
 			try {
 				sleep(1000);
@@ -431,7 +453,7 @@ public class Agente extends Thread {
 				e.printStackTrace();
 			}
 
-			System.out.println("===================");
+			//gravaLog("===================");
 
 		}
 		
@@ -446,16 +468,16 @@ public class Agente extends Thread {
 		
 		if ( ambiente.getText(pos_atual.getX() + 1,pos_atual.getY()) == tipoLixo){
 			direcao = FRENTE;
-			System.out.print("Lixo a frente... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo a frente... tendenciando movimentação do agente") ;
 		}else if ( ambiente.getText(pos_atual.getX() - 1,pos_atual.getY()) == tipoLixo){ 
 			direcao = ATRAS;
-			System.out.print("Lixo atrás... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo atrás... tendenciando movimentação do agente") ;
 		}else if ( ambiente.getText(pos_atual.getX() ,pos_atual.getY()+ 1) == tipoLixo){ 
 			direcao = ABAIXO;
-			System.out.print("Lixo abaixo... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo abaixo... tendenciando movimentação do agente") ;
 		}else if ( ambiente.getText(pos_atual.getX() ,pos_atual.getY()- 1) == tipoLixo){ 
 			direcao = ACIMA;		
-			System.out.print("Lixo acima... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo acima... tendenciando movimentação do agente") ;
 		}
 		
 
@@ -470,16 +492,16 @@ public class Agente extends Thread {
 		//verifica se a segunda celula ao redor possui lixo, e se a primeira celula ao redor não contem obstaculo.
 		if (( ambiente.getText(pos_atual.getX() + 1,pos_atual.getY()) == "") & ( ambiente.getText(pos_atual.getX() + 2,pos_atual.getY()) == tipoLixo)){
 			direcao = FRENTE;
-			System.out.print("Lixo a frente... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo a frente... tendenciando movimentação do agente") ;
 		}else if (( ambiente.getText(pos_atual.getX() - 1,pos_atual.getY()) == "") & ( ambiente.getText(pos_atual.getX() - 2,pos_atual.getY()) == tipoLixo)){ 
 			direcao = ATRAS;
-			System.out.print("Lixo atrás... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo atrás... tendenciando movimentação do agente") ;
 		}else if (( ambiente.getText(pos_atual.getX() ,pos_atual.getY()+ 1) == "") & ( ambiente.getText(pos_atual.getX() ,pos_atual.getY()+ 2) == tipoLixo)){ 
 			direcao = ABAIXO;
-			System.out.print("Lixo abaixo... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo abaixo... tendenciando movimentação do agente") ;
 		}else if (( ambiente.getText(pos_atual.getX() ,pos_atual.getY()- 1) == "") &( ambiente.getText(pos_atual.getX() ,pos_atual.getY()- 2) == tipoLixo)){ 
 			direcao = ACIMA;	
-			System.out.print("Lixo acima... tendenciando movimentação do agente") ;
+			gravaLog(this.nomeAgente + " Lixo acima... tendenciando movimentação do agente") ;
 		}
 
 		return direcao;
@@ -508,8 +530,10 @@ public class Agente extends Thread {
 		
 	}
 	
-	 
-
-	
+	public static void gravaLog(String texto) {
+		textarea.append(texto);
+		textarea.setCaretPosition(textarea.getText().length());
+		SwingUtilities.invokeLater(new UpdateLog(textarea));
+	}
 
 }
